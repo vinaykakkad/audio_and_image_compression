@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Audio-Results</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/audio/results.css') }}">
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+
+	<div class="original-data shadow m-5 results-box">
+		{{ original_plot|safe }}
+	</div>
+	
+	<div class="fft-data shadow m-5 results-box">
+		{{ fft_plot|safe }}
+	</div>
+
+	<div class="download-button-box flex-center m-5 pt-5">
+		<h4 class="text-white">Download the compressed file &#8594;&emsp;&emsp;</h4>
+		<button class="btn my-button">
+			<a href="{{ url_for('static', filename='compress/') }}{{ file }}.npy" target="_blank" download class="text-dark">
+				Download
+			</a>
+		</button>
+	</div>
+
+</div>
+{% endblock %}

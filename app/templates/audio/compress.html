@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Audio-Compress</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/audio/compress.css') }}">
+{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+	<div class="row mb-5">
+		<div class="col-lg-6">
+			<div class="card p-3 mb-5 compress-card">
+				<div class="card-body">
+					<div class="d-flex mb-2">
+						<img src="{{ url_for('static', filename='images/upload.svg') }}" class="compress-icon me-3">
+						<p class="compress-card-heading mb-0">Step 1</p>
+						</div>
+						<p class="text-light">&emsp;&emsp;&emsp;&emsp13;Upload the file here to get the compressed version</p>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-6">
+				<div class="card p-3 compress-card">
+				<div class="card-body">
+					<div class="d-flex align-items-center mb-2">
+						<img src="{{ url_for('static', filename='images/upload.svg') }}" class="compress-icon me-3">
+						<p class="compress-card-heading mb-0">Step 2</p>
+					</div>
+					<p class="text-light">&emsp;&emsp;&emsp;&emsp13;Upload the compressed file in the player to play the audio</p>
+				</div>
+			  </div>
+		</div>
+	</div>
+	<form action="/audio/compress" method="POST" class="input-form" enctype=multipart/form-data>
+		<div>
+			<label for="formFileLg" class="form-label text-light fs-5">Drag & Drop or click to upload</label>
+			<input class="form-control text-light mb-4 dropzone" type="file" name="file">
+			<button class="btn my-button" type="submit">Submit</button>
+		</div>
+	</form>
+</div>
+{% endblock %}

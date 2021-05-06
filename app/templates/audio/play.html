@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Audio-Results</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/audio/play.css') }}">
+{% endblock %}
+
+{% block body %}
+{% if file|length > 0 %}
+<section id="player-response">
+	<div class="container-fluid main">
+		<div class="container mt-5 py-5 gradient-border">
+			<audio controls style="width:100%">
+				<source src="{{ url_for('static', filename='play/') }}{{file}}">
+			</audio>
+			<br>
+			<!-- <img src="{{ url_for('static', filename='images/wav.svg') }}" alt="" width="60px" -->
+				<!-- style="margin-left: 45%;" class="my-5"> -->
+			<h3 class="text-white mx-auto my-5 text-center">You audio is being played</h3>
+		</div>
+	</div>
+</section>
+{% else %}
+	<div class="container-fluid">
+			<div class="card p-3 mb-5 compress-card">
+				<div class="card-body">
+					<div class="d-flex mb-2">
+						<img src="{{ url_for('static', filename='images/upload.svg') }}" class="compress-icon me-3">
+						<p class="compress-card-heading mb-0">Upload the compressed file here</p>
+					</div>
+				</div>
+			</div>
+			<form action="{{ url_for('audio_play_view') }}" method="POST" class="input-form" enctype=multipart/form-data>
+				<div>
+					<label for="formFileLg" class="form-label text-light fs-5">Drag & Drop or click to upload</label>
+					<input class="form-control text-light mb-4 dropzone" type="file" name="file">
+					<button class="btn mt-3 mx-auto my-button">Play</button>
+				</div>
+			</form>
+	</div>
+{% endif %}
+
+{% endblock %}

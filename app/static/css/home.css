@@ -1,0 +1,19 @@
+.home-img {
+	max-width: 768px;
+}
+
+.home-heading {
+	font-size: 48px;
+	font-weight: 700;
+	color: white;
+}
+
+.home-button {
+	background-color: var(--accent-green);
+	color: var(--base);
+	font-weight: 600;
+}
+
+.home-button:hover {
+	background-color: var(--accent-green-dark);
+}

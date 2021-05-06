@@ -1,0 +1,12 @@
+.fft_data rect,
+.original-data rect {
+	stroke: white;
+} 
+
+.mpld3-axesbg {
+	fill: none;
+}
+
+.results-box {
+	border-top: 3px solid var(--accent-green-dark);
+}

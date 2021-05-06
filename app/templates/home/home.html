@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Home</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+{% endblock %}
+
+{% block body %}
+
+<div class="row">
+	<div class="col-xl-6 flex-center">
+		<div class="text-center">
+			<p class="home-heading">Audio and Image Compression</p>
+			<br>
+			<a href="{{ url_for('audio_compress_view') }}">
+				<button class="btn me-3 my-button">Audio</button>
+			</a>
+			<a href="{{ url_for('image_numpy_view') }}">
+				<button class="btn ms-3 my-button" >Image</button>
+			</a>
+		</div>
+	</div>
+	<div class="col-xl-6 flex-center">
+		<img src="{{ url_for('static', filename='images/landing.svg') }}" class="mb-5 home-img"><br>
+	</div>
+</div>
+{% endblock %}
