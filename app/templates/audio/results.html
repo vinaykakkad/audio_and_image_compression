@@ -20,7 +20,7 @@
 	<div class="download-button-box flex-center m-5 pt-5">
 		<h4 class="text-white">Download the compressed file &#8594;&emsp;&emsp;</h4>
 		<button class="btn my-button">
-			<a href="{{ url_for('static', filename='tmp/compress') }}/{{data_file_url}}" target="_blank" download class="text-dark">
+			<a href="{{ url_for('static', filename='compress') }}/{{data_file_url}}" target="_blank" download class="text-dark">
 				Download
 			</a>
 		</button>
@@ -28,7 +28,7 @@
 
 	<div class="container mt-5 py-5">
 		<audio controls style="width:100%">
-			<source src="{{ url_for('static', filename='tmp/play') }}/{{audio_file_url}}">
+			<source src="{{ url_for('static', filename='play') }}/{{audio_file_url}}">
 		</audio>
 		<br>
 		<h3 class="text-white mx-auto my-5 text-center">Play the audio!!</h3>

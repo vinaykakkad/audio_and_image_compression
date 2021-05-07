@@ -60,7 +60,7 @@ def audio_play_view():
 			flash('Only .npy will files are accepted', 'error')
 			return redirect('/audio/play')
 		else:
-			filename = audio_play(file)
+			filename = audio_play(file, file.filename)
 
 			context = { 'file': filename }
 			return render_template('audio/play.html', **(context))
