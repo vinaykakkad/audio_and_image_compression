@@ -1,5 +1,16 @@
+import os
+
 from decouple import config
 from flask import Flask
+
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+PLAY_FOLDER = os.path.join(BASE_DIR, 'app', 'static', 'tmp', 'play')
+COMPRESS_FOLDER = os.path.join(BASE_DIR, 'app', 'static', 'tmp', 'compress')
+
+SAMPLE_AUDIO_FOLDER = os.path.join(BASE_DIR, 'app', 'static', 'samples', 'audio')
+SAMPLE_IMAGE_FOLDER = os.path.join(BASE_DIR, 'app', 'static', 'samples', 'image')
 
 
 class Config(object):

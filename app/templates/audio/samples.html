@@ -1,0 +1,56 @@
+<audio id="sample-1">
+    <source src="{{ url_for('static', filename='samples/audio/1.wav')}}" type="audio/mpeg">
+</audio>
+<audio id="sample-2">
+    <source src="{{ url_for('static', filename='samples/audio/2.wav')}}" type="audio/mpeg">
+</audio>
+<div class="table-responsive">
+    <table class="table text-white my-5">
+        <tbody>
+            <tr>
+                <th scope="row">1</th>
+                <td>Sample 1</td>
+                <td><button class="btn my-button" id="play-sample-1" onclick="onClickHandler('sample-1')">Play</button></td>
+                <td>
+                    <form action="{{ url_for('audio_compress_view')}}" class="m-0 p-0" method="POST" enctype=multipart/form-data>
+                        <div>
+                            <input type="hidden" name="from" value="sample">
+                            <input type="hidden" name="file_name" value="1.wav">
+                            <button class="btn my-button" type="submit">Select</button>
+                        </div>
+                    </form>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">2</th>
+                <td>Sample 2</td>
+                <td><button class="btn my-button" id="play-sample-2" onclick="onClickHandler('sample-2')">Play</button></td>
+                <td>
+                    <form action="{{ url_for('audio_compress_view')}}" class="m-0 p-0" method="POST" enctype=multipart/form-data>
+                        <div>
+                            <input type="hidden" name="from" value="sample">
+                            <input type="hidden" name="file_name" value="2.wav">
+                            <button class="btn my-button" type="submit">Select</button>
+                        </div>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<script>
+    function onClickHandler(audioName) {
+        const audio = document.getElementById(audioName);
+        var button = document.getElementById(`play-${audioName}`);
+        var toDo = button.innerHTML;
+
+        if (toDo === 'Play') {
+            audio.play();
+            button.innerHTML = 'Pause'
+        } else {
+            audio.pause();
+            button.innerHTML = 'Play'
+        }
+    }
+</script>

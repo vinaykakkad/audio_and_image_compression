@@ -3,8 +3,10 @@ import os
 import numpy as np
 from scipy.io import wavfile
 
+from ...config import PLAY_FOLDER
 
-def audio_play(file, UPLOAD_FOLDER):
+
+def audio_play(file, file_name):
 	data = np.load(file)
 
 	channels = 1
@@ -33,8 +35,8 @@ def audio_play(file, UPLOAD_FOLDER):
 	combine = np.concatenate((left, zeros, right))
 	final = np.real(np.fft.ifftn(combine))
 	
-	filename = f'play_{file.filename[:-4]}.wav'
-	wavfile.write(os.path.join(UPLOAD_FOLDER, filename), sampling_freq, 
+	filename = f'play_{file_name[:-4]}.wav'
+	wavfile.write(os.path.join(PLAY_FOLDER, filename), sampling_freq, 
 					final.astype(np.int16))
 
 	return filename

@@ -9,14 +9,12 @@
 {% if file|length > 0 %}
 <section id="player-response">
 	<div class="container-fluid main">
-		<div class="container mt-5 py-5 gradient-border">
+		<div class="container mt-5 py-5">
 			<audio controls style="width:100%">
 				<source src="{{ url_for('static', filename='play/') }}{{file}}">
 			</audio>
 			<br>
-			<!-- <img src="{{ url_for('static', filename='images/wav.svg') }}" alt="" width="60px" -->
-				<!-- style="margin-left: 45%;" class="my-5"> -->
-			<h3 class="text-white mx-auto my-5 text-center">You audio is being played</h3>
+			<h3 class="text-white mx-auto my-5 text-center">Play the audio!!</h3>
 		</div>
 	</div>
 </section>

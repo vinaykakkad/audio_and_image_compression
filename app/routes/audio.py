@@ -5,27 +5,49 @@ from flask import render_template, redirect, request, flash
 
 from ..utils.audio.compress import audio_compress
 from ..utils.audio.play import audio_play
-
-
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-PLAY_FOLDER = os.path.join(BASE_DIR, 'app', 'static', 'play')
-UPLOAD_FOLDER = os.path.join(BASE_DIR, 'app', 'static', 'compress')
+from ..config import BASE_DIR, COMPRESS_FOLDER, PLAY_FOLDER, SAMPLE_AUDIO_FOLDER
 
 
 @app.route('/audio/compress', methods=['POST', 'GET'])
 def audio_compress_view():
+	"""View for audio compression
+
+		GET: Renders the template
+
+		POST: Returns
+			- html string for original data
+			- html string for fft data
+			- name of compressed data file
+			- name of compressed audion file
+	"""
 	if request.method == 'POST':
-		file = request.files.get('file')
+		data_from = request.form['from']
 
-		if not file.filename.endswith('.wav'):
-			flash('Only wav files are accepted', 'error')
-			return redirect('/audio/compress')
+
+		# defining the file and filename
+		if data_from == 'sample':
+			file_name = request.form['file_name']
+			file = os.path.join(SAMPLE_AUDIO_FOLDER, file_name)
 		else:
-			filename, original_plot, fft_plot = audio_compress(file, 80, UPLOAD_FOLDER)
+			file = request.files.get('file')
+			file_name = file.filename
 
-			context = {'file': filename, 'original_plot': original_plot,
-					'fft_plot': fft_plot}
-			return render_template('audio/results.html', **(context))
+			if not file.filename.endswith('.wav'):
+				flash('Only wav files are accepted', 'erro')
+				return redirect('/audio/compress')
+		
+
+		compressed_data_file, compressed_audio_file, data_plot, fft_plot = audio_compress(file, file_name, 80)
+
+		context = {
+			'data_file_url': compressed_data_file, 
+			'audio_file_url': compressed_audio_file,
+			'original_plot': data_plot,
+			'fft_plot': fft_plot
+		}
+		return render_template('audio/results.html', **(context))
+
+
 	return render_template('audio/compress.html')
 
 
@@ -38,7 +60,7 @@ def audio_play_view():
 			flash('Only .npy will files are accepted', 'error')
 			return redirect('/audio/play')
 		else:
-			filename = audio_play(file, PLAY_FOLDER)
+			filename = audio_play(file)
 
 			context = { 'file': filename }
 			return render_template('audio/play.html', **(context))
