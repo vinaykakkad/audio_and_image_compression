@@ -1,11 +1,19 @@
 import os
 
 from flask import current_app as app
-from flask import render_template, redirect, request, flash
+from flask import render_template, redirect, request, flash, Response
 
 from ..utils.audio.compress import audio_compress
 from ..utils.audio.play import audio_play
 from ..config import BASE_DIR, COMPRESS_FOLDER, PLAY_FOLDER, SAMPLE_AUDIO_FOLDER
+
+
+def stream_template(template_name, **context):
+    app.update_template_context(context)
+    t = app.jinja_env.get_template(template_name)
+    rv = t.stream(context)
+    rv.enable_buffering(5)
+    return rv
 
 
 @app.route('/audio/compress', methods=['POST', 'GET'])
@@ -46,6 +54,7 @@ def audio_compress_view():
 			'fft_plot': fft_plot
 		}
 		return render_template('audio/results.html', **(context))
+		# return Response(stream_template('audio/results.html', **(context)))
 
 
 	return render_template('audio/compress.html')

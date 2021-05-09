@@ -9,13 +9,14 @@
 <div class="container-fluid">
 	<div class="row mb-5">
 		<div class="card p-3 mb-5 compress-card">
-			<div class="card-body">
+			<div class="card-bodymb-5">
 				<div class="d-flex mb-2">
 					<img src="{{ url_for('static', filename='images/upload.svg') }}" class="compress-icon me-3">
 					<p class="compress-card-heading mb-0">Upload a .wav file or choose from samples</p>
 				</div>
 				{% include 'audio/samples.html' %}
 			</div>
+			<small class="form-text text-green">** NOTE: If the file size is very large the server may not respond in time and will throw error. Try usning the samples in such cases</small>
 		</div>
 	</div>
 	<form action="{{ url_for('audio_compress_view')}}" method="POST" class="input-form" enctype=multipart/form-data>

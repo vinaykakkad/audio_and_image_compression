@@ -29,8 +29,12 @@ def audio_play(file, file_name):
 		right = data[-data_len:]
 
 	z_len_x = total_length - 2*data_len
-	z_len_y = channels
-	zeros = np.zeros((z_len_x, z_len_y))
+	
+	if channels > 1:
+		zeros = np.zeros((z_len_x, channels))
+	else:
+		zeros = np.zeros((z_len_x,))
+		
 
 	combine = np.concatenate((left, zeros, right))
 	final = np.real(np.fft.ifftn(combine))

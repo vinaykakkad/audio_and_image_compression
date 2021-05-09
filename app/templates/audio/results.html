@@ -7,32 +7,39 @@
 {% endblock %}
 
 {% block body %}
-<div class="container-fluid">
+<div class="container-fluid p-0">
 
-	<div class="original-data shadow m-5 results-box">
+	<div class="original-data shadow my-5 mx-0 mx-sm-5 results-box">
 		{{ original_plot|safe }}
 	</div>
 	
-	<div class="fft-data shadow m-5 results-box">
+	<div class="fft-data shadow my-5 mx-0 mx-sm-5 results-box">
 		{{ fft_plot|safe }}
 	</div>
 
-	<div class="download-button-box flex-center m-5 pt-5">
-		<h4 class="text-white">Download the compressed file &#8594;&emsp;&emsp;</h4>
-		<button class="btn my-button">
-			<a href="{{ url_for('static', filename='compress') }}/{{data_file_url}}" target="_blank" download class="text-dark">
-				Download
-			</a>
-		</button>
+	<div class="row my-5 mx-0 mx-sm-5 shadow results-box">
+		<div class="p-2 p-sm-5 col-sm-6 flex-center">
+			<div class="w-100">
+				<h5 class="text-white mx-auto text-center mb-5">Play the audio!!</h5>
+				<audio controls style="width:100%">
+					<source src="{{ url_for('static', filename='play') }}/{{audio_file_url}}">
+				</audio>
+			</div>
+		</div>
+		<div class="text-center p-2 p-sm-5 col-sm-6 flex-center">
+			<div>
+				<h5 class="text-white">Compressed .npy file to play the audio later using the
+					<a class="text-green" href="{{ url_for('audio_play_view')}}">Audio Player</a>
+				</h5>
+				<button class="mx-auto mt-5 btn my-button">
+					<a href="{{ url_for('static', filename='compress') }}/{{data_file_url}}" target="_blank" download class="text-dark">
+						Download
+					</a>
+				</button>
+			</div>
+		</div>
 	</div>
 
-	<div class="container mt-5 py-5">
-		<audio controls style="width:100%">
-			<source src="{{ url_for('static', filename='play') }}/{{audio_file_url}}">
-		</audio>
-		<br>
-		<h3 class="text-white mx-auto my-5 text-center">Play the audio!!</h3>
-	</div>
 
 </div>
 {% endblock %}

@@ -83,7 +83,7 @@ def audio_compress(file, file_name, compression_ratio):
     # creating the visualisations
     data_plot = create_plot(data, channels, 'Data_points',
                             'Values', 'Original Data')
-    fft_plot = create_plot(fft_data, channels, 'Data_points',
+    fft_plot = create_plot(np.real(fft_data), channels, 'Data_points',
                            'Values', 'After applying FFT')
 
     # removing the less significat part from center for compression
@@ -98,6 +98,7 @@ def audio_compress(file, file_name, compression_ratio):
     else:
         trucated_l = fft_data[:preserve_length]
         trucated_r = fft_data[-preserve_length:]
+        data_to_pad = np.empty((2,))
         data_to_pad[0] = len(data)
         data_to_pad[1] = sampling_freq
 
