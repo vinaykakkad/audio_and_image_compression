@@ -26,7 +26,7 @@
 	{% include 'messages.html' %}
 	<nav>
 		<div class="container-fluid py-2 px-5 nav">
-			<a href="{{ url_for('home_page_view') }}" class="fw-bolder fs-5 text-dark">Compressio</a>
+			<a href="{{ url_for('home_page_view') }}" class="fw-bolder fs-5 text-dark">Compression</a>
 			<div class="toggler">
 				<img src="{{ url_for('static', filename='images/toggler.svg') }}" class="icons">
 			</div>
@@ -58,15 +58,15 @@
 						<hr class="mt-1 mb-0">
 					</div>
 					<div class=" mb-1 px-4 py-2 sidebar-item">
-						<img src="{{ url_for('static', filename='images/zip.svg') }}" width="20px" alt="">&emsp;
+						<img src="{{ url_for('static', filename='images/numpy.svg') }}" width="20px" alt="">&emsp;
 						<a href="{{ url_for('image_numpy_view') }}">
-							Numpy
+							Using Numpy
 						</a>	
 						</div>
 						<div class=" mb-1 px-4 py-2 sidebar-item">
-						<img src="{{ url_for('static', filename='images/zip.svg') }}" width="20px" alt="">&emsp;
-						<a href="{{ url_for('image_naive_view') }}">
-							Naive
+						<img src="https://img.icons8.com/cotton/64/000000/scratchpad.png" width="20px" alt="">&emsp;
+						<a href="{{ url_for('image_scratch_view') }}">
+							From scratch
 						</a>	
 					</div>
 				</div>

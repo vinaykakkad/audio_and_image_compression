@@ -1,0 +1,28 @@
+.step {
+  height: 15px;
+  width: 15px;
+  margin: 0 2px;
+  background-color: var(--white);
+  border: none;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.active {
+  background-color: var(--accent-green);
+}
+
+.form-range::-webkit-slider-thumb {
+  background: var(--accent-green);
+}
+
+.form-range::-moz-range-thumb {
+  background: var(--accent-green);
+}
+
+.form-range::-ms-thumb {
+  background: var(--accent-green);
+}
+.hide {
+  display: none;
+}

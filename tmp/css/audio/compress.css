@@ -25,3 +25,7 @@
 	font-size: 28px;
 	font-weight: 600;
 }
+
+.border-dashed {
+	border-top: 2px dashed white;
+}

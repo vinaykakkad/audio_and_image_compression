@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Image | Numpy Results</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/audio/compress.css') }}">
+{% endblock %}
+
+{% block body %}
+<div class="container-fluid py-5">
+    <div class="row">
+        <!-- Compressed Image -->
+        <div class="col-lg-6 card compress-card p-4 flex-center">
+            <div class="w-100">
+                <img 
+                src="{{ 
+                    url_for(
+                        'static', filename='compressed_images') 
+                    }}/{{ compressed_file_name }}" 
+                    class="w-100"
+                >
+                <p class="fst-italic fs-5 mb-0 text-green text-center">
+                    Compressed Image
+                </p>
+            </div>
+        </div>
+        <!-- Analysis -->
+        <div class="col-lg-6 card compress-card p-3 text-white fs-6 d-flex align-items-center">
+            <div class="w-100 pr-3">
+                <p class="compress-card-heading p-3">
+                    Analysis
+                </p>
+                <ul>
+                    <li>
+                        Original Image<br />
+                        &emsp;Image Size: {{ original_width }}px * {{ original_height }}px <br />
+                        &emsp;Data Points: {{ original_data_points }}
+                    </li>
+                    <div class="my-3 mx-auto border-dashed"></div>
+                    <li>
+                        Comressed Image<br />
+                        &emsp;Size: {{ original_width }} * {{ lower_rank }} +
+                        {{ lower_rank }} +
+                        {{ lower_rank }} * {{ original_height }} <br />
+                        &emsp;Data Points: {{ compressed_data_points }}
+                    </li>
+                    <div class="my-3 mx-auto border-dashed"></div>
+                    <li>
+                        Compression<br />
+                        &emsp;Ratio: {{ original_data_points }} / {{ compressed_data_points }} <br />
+                        &emsp;Percentage : {{ percentage }}%
+                    </li>
+                </ul>
+            </div>
+        </div> 
+    </div>
+</div>
+{% endblock %}

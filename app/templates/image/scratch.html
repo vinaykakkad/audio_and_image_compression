@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Image | From scratch</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/audio/compress.css') }}">
+{% endblock %}
+
+{% block body %}
+<div class="container-fluid py-5">
+	<div class="row mb-5">
+		<div class="card p-3 mb-5 compress-card">
+			<div class="card-bodymb-5">
+				<div class="d-flex mb-2">
+					<img src="{{ url_for('static', filename='images/upload.svg') }}" class="compress-icon me-3">
+					<p class="compress-card-heading mb-0">Upload a small PNG( <= 27px * 27px ) file or choose for samples</p>
+				</div>
+				{% include 'image/samples.html' %}
+			</div>
+			<small class="form-text text-green">** NOTE: If the file size is very large the server may not respond in time and will throw error. Try usning the samples in such cases</small>
+		</div>
+	</div>
+	<form action="{{ url_for('image_scratch_view')}}" method="POST" class="input-form" enctype=multipart/form-data>
+		<div>
+			<input type="hidden" name="from" value="user">
+			<label for="formFileLg" class="form-label text-light fs-5">Drag & Drop or click to upload</label>
+			<input class="form-control text-light mb-4 dropzone" type="file" name="file">
+			<button class="btn my-button" type="submit">Submit</button>
+		</div>
+	</form>
+</div>
+{% endblock %}

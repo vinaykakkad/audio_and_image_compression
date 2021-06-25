@@ -1,0 +1,69 @@
+<div class="table-responsive">
+	<table class="table text-white my-5">
+		<tbody>
+			{% for num in '123' %}
+			<tr>
+				<th scope="row">{{ num }}</th>
+				<td>Sample {{ num }}</td>
+				<td>
+					<button 
+						type="button" 
+						class="btn my-button" 
+						data-bs-toggle="modal" 
+						data-bs-target="#sampleModal"
+						data-bs-sampleNumber="{{ num }}"
+					>
+						Preview
+					</button>
+				</td>
+				<td>
+					
+						<div>
+							<input type="hidden" name="from" value="sample">
+							<input type="hidden" name="file_name" value="{{ num }}.png">
+							<button class="btn my-button" type="submit">Select</button>
+						</div>
+					</form>
+				</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</div>
+
+
+<div 
+	class="modal fade" 
+	id="sampleModal" 
+	tabindex="-1" 
+	aria-labelledby="sampleModalLabel" 
+	aria-hidden="true"
+>
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="sampleModalLabel">Preview</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body p-5 flex-center">
+				<img src="" width="80px">
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<script>
+	var sampleModal = document.getElementById('sampleModal');
+
+	sampleModal.addEventListener('show.bs.modal', function (event) {
+		
+		var button = event.relatedTarget;
+  		var sampleNumber = button.getAttribute('data-bs-sampleNumber');
+
+		var baseString = "{{ url_for('static', filename='samples/image')}}";
+		var imgUrl = `${baseString}/${sampleNumber}.png`;
+
+		sampleModal.querySelector('img').src = imgUrl;
+	});
+</script>
