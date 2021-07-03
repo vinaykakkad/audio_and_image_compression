@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Image | From Scratch</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/audio/compress.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/image/numpy.css') }}">
+{% endblock %}
+
+{% block body %}
+<div class="container-fluid py-5">
+    <!-- Samples box -->
+    <form 
+        action="{{ url_for('image_scratch_view')}}" class="m-0 p-0" 
+        method="POST" enctype=multipart/form-data
+    >
+
+        <input type="hidden" name="from" value="sample">
+        <input type="hidden" name="file_name" id="sample_file_input">
+
+        <!-- Samples table -->
+        <div class="row f-1-p-1">
+            <div class="card p-3 mb-5 compress-card">
+                <div class="card-body">
+                    <div class="d-flex mb-2">
+                        <img 
+                            src="{{ url_for('static', filename='images/upload.svg') }}" 
+                            class="compress-icon me-3">
+                        <p class="compress-card-heading mb-0">
+                            Upload a small PNG( <= 27px * 27px ) file or choose for samples
+                        </p>
+                    </div>
+                    {% include 'image/scratch_samples.html' %}
+                </div>
+                <small class="form-text text-green">
+                    ** NOTE: If the file size is very large the server may not respond
+                    in time and will throw error. Try using the samples in such cases
+                </small>
+            </div>
+        </div>
+
+        <!-- Range Selection -->
+        <div class="row compress-card mb-5 p-3 f-1-p-2 hide">
+            <p class="compress-card-heading mb-3">
+                Choose the perecentage of singular values that you want to preserve:
+            </p>
+
+            <input 
+                type="range" name="ratio" class="form-range mb-3 p-5" 
+                min="5" max="95" step="1"
+                >
+
+            <button 
+                class="btn my-button w-auto mx-auto mb-3" onclick="toggleVisibility('f-1')"
+                type="button"
+            >
+                Back
+            </button>
+            <button class="btn my-button w-auto mx-auto mb-3" type="submit">
+                Submit
+            </button>
+        </div>
+
+        <div class="text-center mb-5">
+            <span class="f-1-step step active"></span>
+            <span class="f-1-step step"></span>
+        </div>
+    </form>
+
+    <!-- User Upload -->
+    <form 
+        action="{{ url_for('image_scratch_view')}}" method="POST" 
+        class="input-form" enctype=multipart/form-data
+    >
+        <!-- File Input -->
+        <div class="f-2-p-1">
+            <input type="hidden" name="from" value="user">
+            <label for="formFileLg" class="form-label text-light fs-5">
+                Drag & Drop or click to upload
+            </label>
+            <input class="form-control text-light mb-4 dropzone" type="file" name="file">
+            <button class="btn my-button" type="button" onclick="toggleVisibility('f-2')">
+                Next
+            </button>
+        </div>
+
+        <!-- Range Selection -->
+        <div class="row compress-card mb-5 p-3 f-2-p-2 hide">
+            <p class="compress-card-heading mb-3">
+                Choose the perecentage of singular values that you want to preserve:
+            </p>
+
+            <input 
+                type="range" name="ratio" class="form-range mb-3 p-5" 
+                min="5" max="95" step="1"
+            >
+
+            <button 
+                class="btn my-button w-auto mx-auto mb-3" onclick="toggleVisibility('f-2')"
+                type="button"
+            >
+                Back
+            </button>
+            <button class="btn my-button w-auto mx-auto mb-3" type="submit">
+                Submit
+            </button>
+        </div>
+        <div class="text-center mb-5">
+            <span class="f-2-step step active"></span>
+            <span class="f-2-step step"></span>
+        </div>
+    </form>
+</div>
+{% endblock %}

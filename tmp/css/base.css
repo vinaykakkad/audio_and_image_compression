@@ -30,6 +30,26 @@ a {
   text-decoration: none;
 }
 
+/* Works on Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--base-light-1) var(--base-light-2);
+}
+
+/* Works on Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 12px;
+}
+
+*::-webkit-scrollbar-track {
+  background: var(--base-light-2);
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: var(--base-light-1);
+  border-radius: 20px;
+}
+
 /* ----- Navbar ----- */
 .nav {
   background-color: var(--base-light-2);

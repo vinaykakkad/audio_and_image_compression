@@ -1,70 +1,58 @@
-from matplotlib.image import imread, imsave
-import matplotlib.pyplot as plt
 import numpy as np
-import time, os
+from matplotlib.image import imsave
 
-from .utils import to_int
-from app.config import COMPRESSED_IMAGE_FOLDER
-
-
-def decompose(image):
-    # Reading the image into a 3-d matrix
-    matrix = imread(image)
-
-    # Splitting the r - g - b components
-    r = matrix[:, :, 0]
-    g = matrix[:, :, 1]
-    b = matrix[:, :, 2]
-
-    # Converting the ndarrays to python list
-    r = np.ndarray.tolist(r)
-    g = np.ndarray.tolist(g)
-    b = np.ndarray.tolist(b)
-
-    return r, g, b
+from .numpy_utils import (
+    get_unique_path,
+    image_to_matrix,
+    list_to_diag_matrix,
+    np_reconstruct_from_svd,
+    np_make_matplotlib_compilant,
+)
+from .scratch_utils import (
+    svd_on_RGBs,
+    image_to_RGBs,
+    save_scratch_image,
+    reconstruct_from_svd
+)
 
 
-def numpy_compression(image, file_name, ratio):
-    # original matrix has the shape(x, y, 3)
-    matrix = imread(image)
-    original_shape = matrix.shape[:2]
+def compress_from_scratch(image, file_name, ratio):
+    RGBs = image_to_RGBs(image)
 
-    # transforming to shape (3, x, y)
-    matrix_transformed = np.transpose(matrix, (2, 0, 1))
+    qr_svd_data, qr_rank = svd_on_RGBs(RGBs, 'qr')
+    jacobi_svd_data, jacobi_rank = svd_on_RGBs(RGBs, 'jacobi')
 
-    # applying svd
-    u, s, v_t = np.linalg.svd(matrix_transformed)
+    final_qr = reconstruct_from_svd(qr_svd_data, int(ratio * qr_rank / 100))
+    final_jacobi = reconstruct_from_svd(
+        jacobi_svd_data, int(ratio * jacobi_rank / 100)
+    )
+
+    path, qr_counter = get_unique_path(f"qr_{file_name}")
+    save_scratch_image(path, final_qr)
+    path, jacobi_counter = get_unique_path(f"jacobi_{file_name}")
+    save_scratch_image(path, final_jacobi)
+
+    qr_file_name = f"{qr_counter}_qr_{file_name}"
+    jacobi_file_name = f"{jacobi_counter}_jacobi_{file_name}"
+
+    return (qr_file_name, jacobi_file_name)
+
+
+def compress_using_numpy(image, file_name, ratio):
+    matrix, original_shape = image_to_matrix(image)
+
+    u, s, v_t = np.linalg.svd(matrix)
     rank = s.shape[1]
 
-    # converting 1d s returned from svd to diagonal matrix
-    sigma = np.zeros((3, matrix.shape[0], matrix.shape[1]))
-    for j in range(3):
-        np.fill_diagonal(sigma[j, :, :], s[j, :])
+    sigma = list_to_diag_matrix(matrix.shape, s)
 
-    # low rank approximation
-    lower_rank = int(ratio * rank / 100)
-    compressed_img = u @ sigma[..., :lower_rank] @ v_t[..., :lower_rank, :]
+    compressed_matrix, lower_rank = np_reconstruct_from_svd(
+        ratio, rank, u, sigma, v_t
+    )
 
-    # transforming back to get the shape ( x, y, 3)
-    transformed_img = np.transpose(compressed_img, (1, 2, 0))
+    compressed_matrix = np_make_matplotlib_compilant(compressed_matrix)
 
-    # if the values are > 1, converting all the values to int
-    # if values are near the range(0, 1), clippint them to 0-1
-    max_value = np.max(transformed_img)
-
-    if max_value > 1.5:
-        transformed_img = transformed_img.astype(np.uint8)
-    else:
-        transformed_img = np.clip(transformed_img, a_max=1.0, a_min=0.0)
-
-    # Ensuring a unique file name for every file
-    counter = 0
-    while os.path.exists(
-        os.path.join(COMPRESSED_IMAGE_FOLDER, f"{counter}_{file_name}")
-    ):
-        counter += 1
-
-    path = os.path.join(COMPRESSED_IMAGE_FOLDER, f"{counter}_{file_name}")
-    imsave(path, transformed_img)
+    path, counter = get_unique_path(file_name)
+    imsave(path, compressed_matrix)
 
     return f"{counter}_{file_name}", original_shape, lower_rank

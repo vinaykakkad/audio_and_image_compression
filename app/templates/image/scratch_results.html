@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Image | Numpy Results</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/audio/compress.css') }}">
+{% endblock %}
+
+{% block body %}
+<div class="container-fluid py-5">
+    <div class="row">
+        <!-- Compressed Image -->
+        <div class="col-lg-6 card compress-card p-4 flex-center">
+            <div class="w-100">
+                <img 
+                src="{{ 
+                    url_for(
+                        'static', filename='compressed_images') 
+                    }}/{{ qr }}" 
+                    class="w-100"
+                >
+                <p class="fst-italic fs-5 mb-0 text-green text-center">
+                    QR Compression
+                </p>
+            </div>
+        </div>
+        <!-- Analysis -->
+        <div class="col-lg-6 card compress-card p-4 flex-center">
+            <div class="w-100">
+                <img 
+                src="{{ 
+                    url_for(
+                        'static', filename='compressed_images') 
+                    }}/{{ jacobi }}" 
+                    class="w-100"
+                >
+                <p class="fst-italic fs-5 mb-0 text-green text-center">
+                    Jacobi Compression
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

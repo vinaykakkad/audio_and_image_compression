@@ -144,6 +144,8 @@ def to_int(matrix):
             for j in range(3):
                 matrix[row][col][j] = int(matrix[row][col][j])
 
+    return matrix
+
 
 def clip(matrix):
     """
@@ -157,3 +159,5 @@ def clip(matrix):
                     matrix[row][col][j] = 1
                 if matrix[row][col][j] < 0:
                     matrix[row][col][j] = 0
+
+    return matrix

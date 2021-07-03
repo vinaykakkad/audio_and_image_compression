@@ -32,21 +32,21 @@
                 <ul>
                     <li>
                         Original Image<br />
-                        &emsp;Image Size: {{ original_width }}px * {{ original_height }}px <br />
-                        &emsp;Data Points: {{ original_data_points }}
+                        &emsp;Image Size: {{ o_width }}px * {{ o_height }}px <br />
+                        &emsp;Data Points: {{ o_data_points }}
                     </li>
                     <div class="my-3 mx-auto border-dashed"></div>
                     <li>
                         Comressed Image<br />
-                        &emsp;Size: {{ original_width }} * {{ lower_rank }} +
+                        &emsp;Size: {{ o_width }} * {{ lower_rank }} +
                         {{ lower_rank }} +
-                        {{ lower_rank }} * {{ original_height }} <br />
-                        &emsp;Data Points: {{ compressed_data_points }}
+                        {{ lower_rank }} * {{ o_height }} <br />
+                        &emsp;Data Points: {{ c_data_points }}
                     </li>
                     <div class="my-3 mx-auto border-dashed"></div>
                     <li>
                         Compression<br />
-                        &emsp;Ratio: {{ original_data_points }} / {{ compressed_data_points }} <br />
+                        &emsp;Ratio: {{ c_data_points }} / {{ o_data_points }} <br />
                         &emsp;Percentage : {{ percentage }}%
                     </li>
                 </ul>
