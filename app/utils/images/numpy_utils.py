@@ -11,7 +11,7 @@ def image_to_matrix(image):
     transforming to shape (3, x, y)"""
     matrix = imread(image)
     matrix_transformed = np.transpose(matrix, (2, 0, 1))
-    
+
     return matrix_transformed, matrix.shape
 
 
@@ -27,9 +27,7 @@ def np_reconstruct_from_svd(ratio, rank, u, sigma, v_t):
     """low rank approximation and rearrangement"""
     # low rank approximation
     lower_rank = int(ratio * rank / 100)
-    compressed_matrix = (
-        u @ sigma[..., :lower_rank] @ v_t[..., :lower_rank, :]
-    )
+    compressed_matrix = u @ sigma[..., :lower_rank] @ v_t[..., :lower_rank, :]
 
     # transforming back to get the shape ( x, y, 3)
     compressed_matrix = np.transpose(compressed_matrix, (1, 2, 0))
@@ -43,7 +41,7 @@ def np_make_matplotlib_compilant(matrix):
     - If values are in the range [0, 255]
         No values should be a floast"""
     max_value = np.max(matrix)
-    
+
     if max_value > 1.5:
         matrix = matrix.astype(np.uint8)
     else:
@@ -59,7 +57,7 @@ def get_unique_path(file_name):
         os.path.join(COMPRESSED_IMAGE_FOLDER, f"{counter}_{file_name}")
     ):
         counter += 1
-    
+
     path = os.path.join(COMPRESSED_IMAGE_FOLDER, f"{counter}_{file_name}")
 
     return path, counter

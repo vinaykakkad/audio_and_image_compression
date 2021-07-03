@@ -12,22 +12,21 @@ def image_numpy_view():
     if request.method == "POST":
         file, file_name, ratio = get_data_from_request(request)
 
-        (
-            compressed_file_name, 
-            original_shape, 
-            lower_rank 
-        ) = compress_using_numpy( file, file_name, ratio )
+        (compressed_file_name, original_shape, lower_rank) = compress_using_numpy(
+            file, file_name, ratio
+        )
 
         analysis = numpy_analysis(original_shape, lower_rank)
 
         context = {
             "compressed_file_name": compressed_file_name,
-            "lower_rank": lower_rank, **analysis
+            "lower_rank": lower_rank,
+            **analysis,
         }
 
         print(context)
         return render_template("image/numpy_results.html", **context)
-        
+
     return render_template("image/numpy.html")
 
 
@@ -36,15 +35,11 @@ def image_scratch_view():
     if request.method == "POST":
         file, file_name, ratio = get_data_from_request(request)
 
-        (
-            qr_file_name, 
-            jacobi_file_name
-        ) = compress_from_scratch(file, file_name, ratio)
+        (qr_file_name, original_file_name) = compress_from_scratch(
+            file, file_name, ratio
+        )
 
-        context = {
-            'qr': qr_file_name,
-            'jacobi': jacobi_file_name
-        }
+        context = {"qr": qr_file_name, "original": original_file_name}
         return render_template("image/scratch_results.html", **context)
 
-    return render_template("image/scratch_2.html")
+    return render_template("image/scratch.html")

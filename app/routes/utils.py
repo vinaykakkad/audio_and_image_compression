@@ -21,18 +21,20 @@ def get_data_from_request(request):
 def numpy_analysis(original_shape, lower_rank):
     original_width = original_shape[0]
     original_height = original_shape[1]
-    
+
     original_data_points = original_height * original_width
-    compressed_data_points = original_width * lower_rank \
-                                + lower_rank * lower_rank \
-                                + lower_rank * original_height
+    compressed_data_points = (
+        original_width * lower_rank
+        + lower_rank * lower_rank
+        + lower_rank * original_height
+    )
 
     percentage = round(compressed_data_points / original_data_points, 2)
 
     return {
-        'o_height': original_height,
-        'o_width': original_width,
-        'o_data_points': original_data_points,
-        'c_data_points': compressed_data_points,
-        'percentage': percentage
+        "o_height": original_height,
+        "o_width": original_width,
+        "o_data_points": original_data_points,
+        "c_data_points": compressed_data_points,
+        "percentage": percentage,
     }
