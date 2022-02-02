@@ -7,6 +7,7 @@ Jacobi Eigenvalue Algorithm, QR Algorithm and Singular Value Decomposition have 
 
 A web interface has been made to make the project more accessible to others.
 
+*Some part of the project is not on the web interface due to the heroku free dyno. The complete script is on other brnach*
 
 ## Demo 💻
 
